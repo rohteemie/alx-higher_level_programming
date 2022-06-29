@@ -1,77 +1,28 @@
 #include "lists.h"
-
 /**
-
- * check_cycle - checks if a singly linked
-
- * list has a cycle in it
-
- * @list: pointer to singly linked lists
-
- * Return: 0 if there is no cycle, 1 if there is a cycle
-
+ * check_cycle - search infinite loop on linkedlists
+ * @list: linkedlist head *
+ * Return: 1 if cycle found, 0 otherwise
  */
-
 int check_cycle(listint_t *list)
-
 {
+	listint_t *forwd = list;
+	listint_t *back = list;
 
-	listint_t *i;
+	if (!list || !list->next)
+		return (0);
 
-	listint_t *j;
+	back = back->next;
+	forwd = forwd->next->next;
 
-
-
-	i = list;
-
-	j = list;
-
-	while (list && i &&  i->next)
-
+	for (; forwd && back && forwd->next;)
 	{
-
-		list = list->next;
-
-		i = i->next->next;
-
-
-
-		if (list == i)
-
-		{
-
-			list = j;
-
-			j = i;
-
-			while (1)
-
-			{
-
-				i = j;
-
-				while (i->next != list && i->next != j)
-
-				{
-
-					i = i->next;
-
-				}
-
-				if (i->next == list)
-
-					break;
-
-				list = list->next;
-
-			}
-
+		if (back == forwd)
 			return (1);
 
-		}
+		back = back->next;
+		forwd = forwd->next->next;
 
 	}
-
 	return (0);
-
 }
